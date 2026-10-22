@@ -1,0 +1,11 @@
+resources:
+  instance_pools:
+    team_pool:
+      instance_pool_name: cluster-policies-and-pools-example
+      node_type_id: ${var.node_type_id}
+      # Keep cost low: no warm idle VMs; drop extras quickly.
+      min_idle_instances: 0
+      max_capacity: 2
+      idle_instance_autotermination_minutes: 10
+      preloaded_spark_versions:
+        - 18.x-scala2.13

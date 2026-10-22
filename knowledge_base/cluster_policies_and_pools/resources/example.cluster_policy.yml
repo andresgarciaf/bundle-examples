@@ -1,0 +1,16 @@
+resources:
+  cluster_policies:
+    team_policy:
+      name: cluster-policies-and-pools-example
+      description: Limits node type and autotermination for classic clusters.
+      # Allowlist / range (not fixed): fixed values are injected into job clusters,
+      # which break instance_pool_id and reject autotermination_minutes.
+      definition:
+        node_type_id:
+          type: allowlist
+          values:
+            - ${var.node_type_id}
+        autotermination_minutes:
+          type: range
+          minValue: 10
+          maxValue: 60

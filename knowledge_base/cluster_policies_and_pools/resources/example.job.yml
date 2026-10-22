@@ -1,0 +1,23 @@
+resources:
+  jobs:
+    example_job:
+      name: Cluster policies and pools example
+      description: Classic job cluster that uses a bundle policy and instance pool.
+      tasks:
+        - task_key: hello
+          job_cluster_key: policy_pool
+          spark_python_task:
+            python_file: ../src/main.py
+
+      job_clusters:
+        - job_cluster_key: policy_pool
+          new_cluster:
+            spark_version: 18.x-scala2.13
+            policy_id: ${resources.cluster_policies.team_policy.id}
+            instance_pool_id: ${resources.instance_pools.team_pool.id}
+            num_workers: 0
+            spark_conf:
+              spark.databricks.cluster.profile: singleNode
+              spark.master: local[*]
+            custom_tags:
+              ResourceClass: SingleNode
